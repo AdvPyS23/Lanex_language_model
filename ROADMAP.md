@@ -11,6 +11,8 @@ Write a mission and summary for your project: start with a name for your project
   • Outline your milestones: what needs to be done for your project, and when? \
   • Provide a short list of tasks for each milestone that are required to successfully complete the project work on a given milestone. \
   • Note down any relevant events and timeframes.
+  
+  #test laura test
 
 
 ### 2. How to get involved
