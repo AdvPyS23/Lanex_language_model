@@ -1,20 +1,37 @@
-## WIP - Plan
-### 1. Project summary & welcome
-This section organizes tasks needed to complete your project around milestones, mapping out what you're working on now and where it's going next. \
-_Welcome session_\
-'Our project roadmap is where you can learn about...'\
-'Existing issues...'\
-'Interactions...'
+## 🌷Welcome
 
-_summary session_\
+Here we organize the taskes needed to complete the project, and keeps track of what we are working on. 
+
+## 💠Timeline - Milestones
+This project is currently named Lanux, this name could be modified later.
+1. Build databases of built-in dataset using third party libraries. [week 1]
+2. Develop interface for user to input their words and definition. [week 1-2]
+3. Generate two types of quizzes (multiple choice & typing) from the database. [week 2-3]
+4. Develop visualization of test results. [week 3-4]
+
 Write a mission and summary for your project: start with a name for your project\
   • Outline your milestones: what needs to be done for your project, and when? \
   • Provide a short list of tasks for each milestone that are required to successfully complete the project work on a given milestone. \
   • Note down any relevant events and timeframes.
-  
+ 
+## 🖊️List of tasks
+
+* [x] Publish roadmap and readme for the project.
+* [ ] Get the dataset for Dutch and Chinese for the build in dataset of the project.
+* [ ] Check database fonts and address special characters.
+* [ ] Organize the dataset so each word comes with pronounciation, translation and example of usage.
+* [ ] Organize words in database by language and difficulty level.
+* [ ] Build user interface.
+* [ ] Test basic mix & match function of user inputed data.
+* [ ] Test the mode of exercise that allows user to type the word.
+* [ ] Display right / wrong after user answered a question.
+* [ ] Display the final grade after user completed a set of exercise.
+* [ ] Visualize the user's performance as a pie chart.
+* [ ] Highlight the set user scored the highest vs the lowest.
+* [ ] Display a set that the user has not practiced in a while. 
 
 
-### 2. How to get involved
+
+## 📨How to get involved
 Line to parts in the repository
-
-### 3. Timeline
+To contact the author, visit [here](). 
