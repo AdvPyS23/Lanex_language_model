@@ -13,4 +13,4 @@
 - The code of the program can be found [here](reserved_link)
 - To report issues, edits or upload your local dataset, contact the author:
   -   Laura.dekker@students.unibe.ch
-  -   Xiaoyue.deng@students.unibe.ch [here]()
+  -   Xiaoyue.deng@students.unibe.ch
