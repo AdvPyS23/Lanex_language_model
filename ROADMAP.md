@@ -3,16 +3,12 @@
 Here we organize the taskes needed to complete the project, and keeps track of what we are working on. 
 
 ## 💠Timeline - Milestones
-This project is currently named Lanux, this name could be modified later.
+This project is currently named Lanex, this name could be modified later.
 1. Build databases of built-in dataset using third party libraries. [week 1]
 2. Develop interface for user to input their words and definition. [week 1-2]
 3. Generate two types of quizzes (multiple choice & typing) from the database. [week 2-3]
 4. Develop visualization of test results. [week 3-4]
 
-Write a mission and summary for your project: start with a name for your project\
-  • Outline your milestones: what needs to be done for your project, and when? \
-  • Provide a short list of tasks for each milestone that are required to successfully complete the project work on a given milestone. \
-  • Note down any relevant events and timeframes.
  
 ## 🖊️List of tasks
 
