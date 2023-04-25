@@ -30,4 +30,4 @@ This project is currently named Lanex, this name could be modified later.
 
 ## 📨How to get involved
 Line to parts in the repository
-To contact the author, visit [here](). 
+To contact the author, visit [here](https://github.com/XiaoyueLenax/Advanced_Py/blob/main/README.md). 
