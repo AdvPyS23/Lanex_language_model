@@ -1,0 +1,4 @@
+In order to run this program, you will need the following:
+1. Functional python 3
+2. Ubuntu installed
+3. List of python libraries required: [Under construction]
