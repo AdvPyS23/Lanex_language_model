@@ -1,7 +1,7 @@
 ************* Module Input_words_classes
-Input_words_classes.py:46:0: C0301: Line too long (204/100) (line-too-long)
-Input_words_classes.py:54:9: C0303: Trailing whitespace (trailing-whitespace)
-Input_words_classes.py:55:84: C0303: Trailing whitespace (trailing-whitespace)
+[x] Input_words_classes.py:46:0: C0301: Line too long (204/100) (line-too-long)
+[x]Input_words_classes.py:54:9: C0303: Trailing whitespace (trailing-whitespace)
+[]Input_words_classes.py:55:84: C0303: Trailing whitespace (trailing-whitespace)
 Input_words_classes.py:58:0: W0311: Bad indentation. Found 8 spaces, expected 4 (bad-indentation)
 Input_words_classes.py:60:0: W0311: Bad indentation. Found 8 spaces, expected 4 (bad-indentation)
 Input_words_classes.py:61:0: W0311: Bad indentation. Found 8 spaces, expected 4 (bad-indentation)

@@ -43,7 +43,16 @@ def search_word():
     found = False
     for word in vocabulary_list:
         if word.word == search_term:
-            word_display.config(text="Word: {}\nTranslation: {}\nPronunciation: {}\nUsage: {}\nCategory: {}".format(word.word, word.translation, word.pronunciation, word.usage, word.category), fg="black")
+            word_display.config(text="Word: {}\n"
+                                "Translation: {}\n"
+                                "Pronunciation: {}\n"
+                                "Usage: {}\n"
+                                "Category: {}".format(word.word, 
+                                                      word.translation, 
+                                                      word.pronunciation, 
+                                                      word.usage, 
+                                                      word.category),
+                                fg="black")
             found = True
             break
     if not found:
