@@ -1,13 +1,13 @@
+"""
+This module defines the class Word,
+which represents a word in the database,
+that comes with definition, pronounciation, etc.
+The Word class also has methods for
+searching and testing the words.
+"""
 import tkinter as tk
 import random
 from tkinter import messagebox
-"""
-This module defines the class Word, 
-which represents a word in the database,
-that comes with definition, pronounciation, etc.
-The Word class also has methods for 
-searching and testing the words.
-"""
 
 # Get empty list first -- now we only work with one language
 vocabulary_list = []
@@ -19,6 +19,9 @@ class Word:
     This part defines the class Word.
     """
     def __init__(self, word, translation, pronunciation, usage, category):
+        """
+        This function defines the initial classes of words.
+        """
         self.word = word
         self.translation = translation
         self.pronunciation = pronunciation
@@ -27,6 +30,11 @@ class Word:
 
 # Define a function to add a new word to the vocabulary list
 def add_word():
+    """
+    This function allows the user to add
+    their words and other parameters such as
+    translation, usage and pronunciation.
+    """
     word = word_entry.get()
     translation = translation_entry.get()
     pronunciation = pronunciation_entry.get()
@@ -43,12 +51,20 @@ def add_word():
 
 # Define a function to display all words in the vocabulary list
 def display_words():
+    """
+    This function lets the user see what words they've
+    inputed.
+    """
     word_list.delete(0, tk.END)
     for word in vocabulary_list:
         word_list.insert(tk.END, word.word)
 
 # Define a function to search for a specific word in the vocabulary list
 def search_word():
+    """
+    This function allows user to search for their words
+    in the data base.
+    """
     search_term = search_entry.get()
     found = False
     for word in vocabulary_list:
@@ -59,7 +75,8 @@ def search_word():
                                 "Usage: {}\n"
                                 "Category: {}".format(word.word,
                                                       word.translation,
-                                                      word.pronunciation,                                                      word.usage, 
+                                                      word.pronunciation,
+                                                      word.usage,
                                                       word.category),
                                 fg="black")
             found = True
@@ -69,9 +86,13 @@ def search_word():
 
 
 # ----------------------------------------------------------------------------------
-# Testing 
+# Testing
 #----------------------------------------------------------------------------------
 def start_test():
+    """
+    This function allows the user to start test their words by
+    typing. This function is currently WIP.
+    """
     # Select a random word from the vocabulary list
     test_word = random.choice(vocabulary_list)
     # Display the word in the test entry widget
@@ -83,6 +104,9 @@ def start_test():
     submit_button.config(state="normal")
 
 def check_answer(answer, expected):
+    """
+    This function checks the answer.
+    """
     if answer.lower() == expected.lower():
         messagebox.showinfo("Correct!")
     else:
@@ -92,8 +116,10 @@ def check_answer(answer, expected):
 # Define the main function
 #===========================
 def main():
-    global vocabulary_list
-    global word_entry
+    """
+    This is the main function.
+    """
+    global vocabulary_list,word_entry
     global translation_entry
     global pronunciation_entry
     global usage_entry
@@ -166,27 +192,27 @@ def main():
     # Create the status label
     status_label = tk.Label(root, text="", font=("Arial", 12))
     status_label.grid(row=9, column=0, columnspan=2)
-    
-    # Get the test mode 
-    # Create the test mode button
+    # Get the test mode
+    #Create the test mode button
     test_button = tk.Button(root, text="Test Mode", command=start_test)
     test_button.grid(row=10, column=0)
     # Create the test mode entry widget and submit button
     test_entry = tk.Entry(root)
     test_entry.grid(row=10, column=1)
     test_entry.config(state="disabled")
-    submit_button = tk.Button(root, text="Submit", command=lambda: check_answer(test_entry.get(), test_word))
+    submit_button = tk.Button(root, text="Submit",
+                              command=lambda:
+                                  check_answer(test_entry.get(), test_word))
     submit_button.grid(row=10, column=2)
     submit_button.config(state="disabled")
 
     # Create the start test button
-    start_test_button = tk.Button(root, 
-                                  text="Start Test", 
+    start_test_button = tk.Button(root,
+                                  text="Start Test",
                                   command=start_test)
     start_test_button.grid(row=9, column=1)
-    
+
     root.mainloop()
 
 if __name__ == '__main__':
     main()
-
