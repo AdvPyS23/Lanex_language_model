@@ -9,4 +9,6 @@
 * [ ] Improve UI: have a main screen where it branches to different functions.
 * [ ] Try to avoid 'too many statement' issue
 * [ ] Add option for user to initialize a pre-built dataset
-* [ ] Unify the data sctructure of all four built-in languages
+* [ ] Unify the data sctructure of all four built-in language
+* [ ] Add option for user to select whether they want to practice with the given dataset, or customized dataset.
+* [x] Major fix: changed everything into dataframe. Built-in stored as csv files, seperated by comma.
