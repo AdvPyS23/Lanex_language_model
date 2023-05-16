@@ -5,3 +5,6 @@
 * [x] Planned future UI improvment.  
 * [x] Decomposition: broke the main code into front end and back end, may seperate function further for readability
 * [x] Abstraction: unecessary information are hidden by calling a user interface. 
+* [ ] Button to sort words by : difficulty, category
+* [ ] Improve UI: have a main screen where it branches to different functions.
+* [ ] Try to avoid 'too many statement' issue
