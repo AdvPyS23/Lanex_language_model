@@ -26,20 +26,22 @@ vocabulary_list = pd.DataFrame(columns=[
 
 # Define a function to add a new word to the vocabulary list
 def add_word():
-    word = word_entry.get()
-    translation = translation_entry.get()
-    pronunciation = pronunciation_entry.get()
-    usage = usage_entry.get()
-    category = category_entry.get()
-    difficulty = difficulty_entry.get()
-    new_word = Word(word, translation, pronunciation, usage, category, difficulty)
+    init_word = word_entry.get()
+    init_translation = translation_entry.get()
+    init_pronunciation = pronunciation_entry.get()
+    init_usage = usage_entry.get()
+    init_category = category_entry.get()
+    init_difficulty = difficulty_entry.get()
+    
+    new_word = Word(init_word, init_translation, init_pronunciation, init_usage, init_category, init_difficulty)
     global vocabulary_list
-    vocabulary_list = vocabulary_list.append({"word": new_word.word,
-                                              "translation": new_word.translation,
-                                              "pronunciation": new_word.pronunciation,
-                                              "usage": new_word.usage,
-                                              "category": new_word.category,
-                                              "difficulty": new_word.difficulty}, ignore_index=True)
+    new_word = pd.DataFrame({"word": [init_word],
+                             "translation": [init_translation],
+                             "pronunciation": [init_pronunciation],
+                             "usage": [init_usage],
+                             "category": [init_category],
+                             "difficulty": [init_difficulty]})
+    vocabulary_list = pd.concat([vocabulary_list, new_word], ignore_index=True)
     word_entry.delete(0, tk.END)
     translation_entry.delete(0, tk.END)
     pronunciation_entry.delete(0, tk.END)
@@ -51,33 +53,25 @@ def add_word():
 # Define a function to display all words in the vocabulary list
 def display_words():
     word_list.delete(0, tk.END)
-    for row in vocabulary_list.iterrows():
+    for index,row in vocabulary_list.iterrows():
         word_list.insert(tk.END, row["word"])
 
 # Define a function to search for a specific word in the vocabulary list
 def search_word():
-    """
-    This function allows the user to search for their words
-    in the database.
-    """
     search_term = search_entry.get()
-    found = False
-    word_display.config(text="")  # Clear the previous displayed word
-    for row in vocabulary_list.iterrows():
-        if row[1]["word"] == search_term:
-            word_display.config(
-                text=
-                "Word: {}\nTranslation: {}\nPronunciation: {}\nUsage: {}\nCategory: {}".format(
-                    row[1]["word"], row[1]["translation"],
-                    row[1]["pronunciation"], row[1]["usage"],
-                    row[1]["category"]
-                ),
-                fg="black",
-            )
-            found = True
-            break
-    if not found:
-        word_display.config(text="Word not found.", fg="red")
+    search_results = vocabulary_list[vocabulary_list['word'] == search_term]
+    if not search_results.empty:
+        row = search_results.iloc[0]
+        word_display.config(text=f"Word: {row['word']}\n"
+                                 f"Translation: {row['translation']}\n"
+                                 f"Pronunciation: {row['pronunciation']}\n"
+                                 f"Usage: {row['usage']}\n"
+                                 f"Category: {row['category']}\n"
+                                 f"Difficulty: {row['difficulty']}")
+    else:
+        word_display.config(text="Word not found.")
+
+    search_entry.delete(0, tk.END)
         
 def clear_status_label():
     """
@@ -167,6 +161,7 @@ def main():
     category_label.grid(row=4, column=0)
     category_entry = tk.Entry(root)
     category_entry.grid(row=4, column=1)
+    
     # Difficulty
     difficulty_label = tk.Label(root,text = 'Difficulty')
     difficulty_label.grid(row=5, column = 0)
