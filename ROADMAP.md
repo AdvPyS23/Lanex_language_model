@@ -26,7 +26,7 @@ This project is currently named Lanex, this name could be modified later.
 * [ ] Visualize the user's performance as a pie chart.
 * [ ] Highlight the set user scored the highest vs the lowest.
 * [ ] Display a set that the user has not practiced in a while. 
-
+* [x] Further changes on the user interface
 
 
 ## 📨How to get involved
