@@ -8,82 +8,82 @@ searching and testing the words.
 import tkinter as tk
 import random
 from tkinter import messagebox
+import pandas as pd
 
-# Get empty list first -- now we only work with one language
-vocabulary_list = []
-# file_path = "vocabulary.csv" # Place holder for where to save the local data
-
-# Define a class for vocabulary words, universal
+# Define a class for vocabulary words
 class Word:
-    """
-    This part defines the class Word.
-    """
-    def __init__(self, word, translation, pronunciation, usage, category):
-        """
-        This function defines the initial classes of words.
-        """
+    def __init__(self, word, translation, pronunciation, usage, category, difficulty):
         self.word = word
         self.translation = translation
         self.pronunciation = pronunciation
         self.usage = usage
         self.category = category
+        self.difficulty = difficulty
+
+# Create an empty DataFrame
+vocabulary_list = pd.DataFrame(columns=[
+    "word", "translation", "pronunciation", "usage", "category", "difficulty"])
 
 # Define a function to add a new word to the vocabulary list
 def add_word():
-    """
-    This function allows the user to add
-    their words and other parameters such as
-    translation, usage and pronunciation.
-    """
     word = word_entry.get()
     translation = translation_entry.get()
     pronunciation = pronunciation_entry.get()
     usage = usage_entry.get()
     category = category_entry.get()
-    new_word = Word(word, translation, pronunciation, usage, category)
-    vocabulary_list.append(new_word)
+    difficulty = difficulty_entry.get()
+    new_word = Word(word, translation, pronunciation, usage, category, difficulty)
+    global vocabulary_list
+    vocabulary_list = vocabulary_list.append({"word": new_word.word,
+                                              "translation": new_word.translation,
+                                              "pronunciation": new_word.pronunciation,
+                                              "usage": new_word.usage,
+                                              "category": new_word.category,
+                                              "difficulty": new_word.difficulty}, ignore_index=True)
     word_entry.delete(0, tk.END)
     translation_entry.delete(0, tk.END)
     pronunciation_entry.delete(0, tk.END)
     usage_entry.delete(0, tk.END)
     category_entry.delete(0, tk.END)
     status_label.config(text="New word added to database.", fg="green")
+    root.after(2000, lambda: clear_status_label())
 
 # Define a function to display all words in the vocabulary list
 def display_words():
-    """
-    This function lets the user see what words they've
-    inputed.
-    """
     word_list.delete(0, tk.END)
-    for word in vocabulary_list:
-        word_list.insert(tk.END, word.word)
+    for row in vocabulary_list.iterrows():
+        word_list.insert(tk.END, row["word"])
 
 # Define a function to search for a specific word in the vocabulary list
 def search_word():
     """
-    This function allows user to search for their words
-    in the data base.
+    This function allows the user to search for their words
+    in the database.
     """
     search_term = search_entry.get()
     found = False
-    for word in vocabulary_list:
-        if word.word == search_term:
-            word_display.config(text="Word: {}\n"
-                                "Translation: {}\n"
-                                "Pronunciation: {}\n"
-                                "Usage: {}\n"
-                                "Category: {}".format(word.word,
-                                                      word.translation,
-                                                      word.pronunciation,
-                                                      word.usage,
-                                                      word.category),
-                                fg="black")
+    word_display.config(text="")  # Clear the previous displayed word
+    for row in vocabulary_list.iterrows():
+        if row[1]["word"] == search_term:
+            word_display.config(
+                text=
+                "Word: {}\nTranslation: {}\nPronunciation: {}\nUsage: {}\nCategory: {}".format(
+                    row[1]["word"], row[1]["translation"],
+                    row[1]["pronunciation"], row[1]["usage"],
+                    row[1]["category"]
+                ),
+                fg="black",
+            )
             found = True
             break
     if not found:
-        word_display.config(text="Word not found. ", fg="red")
-
+        word_display.config(text="Word not found.", fg="red")
+        
+def clear_status_label():
+    """
+    This function clears the status_label text.
+    """
+    status_label.config(text="")
 
 # ----------------------------------------------------------------------------------
 # Testing
@@ -124,13 +124,14 @@ def main():
     global pronunciation_entry
     global usage_entry
     global category_entry
+    global difficulty_entry
     global word_display
     global search_entry
     global status_label
     global word_list
     global test_entry
     global submit_button
-    global test_word
+    global root
     # Create the main window
     root = tk.Tk()
     root.title("Lanex: Your trusted Language Learning Assistant")
@@ -166,51 +167,60 @@ def main():
     category_label.grid(row=4, column=0)
     category_entry = tk.Entry(root)
     category_entry.grid(row=4, column=1)
+    # Difficulty
+    difficulty_label = tk.Label(root,text = 'Difficulty')
+    difficulty_label.grid(row=5, column = 0)
+    options = ["Easy", "Moderate", "Hard"]
+    difficulty_entry = tk.StringVar(root)
+    difficulty_entry.set(options[0]) # default option 
+    difficulty_menu = tk.OptionMenu(root, difficulty_entry, *options)
+    difficulty_menu.grid(row=5, column=1)
 
     # Create the add word button
     add_button = tk.Button(root, text="Add Word", command=add_word)
-    add_button.grid(row=5, column=1)
+    add_button.grid(row=6, column=1)
 
     # Create the display words button and listbox
     display_button = tk.Button(root, text="Display Words", command=display_words)
     display_button.grid(row=6, column=0)
     word_list = tk.Listbox(root)
-    word_list.grid(row=6, column=1)
+    word_list.grid(row=7, column=1)
 
     # Create the search word widgets
     search_label = tk.Label(root, text="Search Word:")
-    search_label.grid(row=7, column=0)
+    search_label.grid(row=8, column=0)
     search_entry = tk.Entry(root)
-    search_entry.grid(row=7, column=1)
-    search_button = tk.Button(root, text="Search", command=search_word)
-    search_button.grid(row=7, column=2)
+    search_entry.grid(row=8, column=1)
+    search_button = tk.Button(root, text="Search by Words", command=search_word)
+    search_button.grid(row=8, column=2)
+    
 
     # Create the word display label
     word_display = tk.Label(root, text="", font=("Arial", 12))
-    word_display.grid(row=8, column=0, columnspan=2)
+    word_display.grid(row=9, column=0, columnspan=2)
 
     # Create the status label
     status_label = tk.Label(root, text="", font=("Arial", 12))
-    status_label.grid(row=9, column=0, columnspan=2)
+    status_label.grid(row=12, column=0, columnspan=2)
     # Get the test mode
     #Create the test mode button
     test_button = tk.Button(root, text="Test Mode", command=start_test)
-    test_button.grid(row=10, column=0)
+    test_button.grid(row=15, column=0)
     # Create the test mode entry widget and submit button
     test_entry = tk.Entry(root)
-    test_entry.grid(row=10, column=1)
+    test_entry.grid(row=15, column=1)
     test_entry.config(state="disabled")
     submit_button = tk.Button(root, text="Submit",
                               command=lambda:
                                   check_answer(test_entry.get(), test_word))
-    submit_button.grid(row=10, column=2)
+    submit_button.grid(row=15, column=2)
     submit_button.config(state="disabled")
 
     # Create the start test button
     start_test_button = tk.Button(root,
                                   text="Start Test",
                                   command=start_test)
-    start_test_button.grid(row=9, column=1)
+    start_test_button.grid(row=14, column=1)
 
     root.mainloop()
 
