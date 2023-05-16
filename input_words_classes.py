@@ -79,32 +79,30 @@ def clear_status_label():
     """
     status_label.config(text="")
 
-# ----------------------------------------------------------------------------------
-# Testing
-#----------------------------------------------------------------------------------
 def start_test():
     """
-    This function allows the user to start test their words by
-    typing. This function is currently WIP.
+    This function allows the user to start testing their words by typing.
     """
     # Select a random word from the vocabulary list
-    test_word = random.choice(vocabulary_list)
-    # Display the word in the test entry widget
+    test_word = random.choice(vocabulary_list["word"])
+    # Enable the test entry widget
     test_entry.config(state="normal")
     test_entry.delete(0, tk.END)
     test_entry.insert(0, test_word)
-    test_entry.config(state="disabled")
+    test_entry.focus_set()  # Set focus on the test entry widget to enable typing
     # Enable the submit button
     submit_button.config(state="normal")
 
-def check_answer(answer, expected):
+def check_answer():
     """
     This function checks the answer.
     """
+    answer = test_entry.get().strip()
+    expected = vocabulary_list.loc[vocabulary_list["word"] == test_entry.get(), "translation"].iloc[0]
     if answer.lower() == expected.lower():
-        messagebox.showinfo("Correct!")
+        messagebox.showinfo("Correct!", "Your answer is correct!")
     else:
-        messagebox.showerror(f"Incorrect. The correct answer is {expected}.")
+        messagebox.showerror("Incorrect!", f"The correct answer is: {expected}")
 
 #===========================
 # Define the main function
@@ -197,6 +195,7 @@ def main():
     # Create the status label
     status_label = tk.Label(root, text="", font=("Arial", 12))
     status_label.grid(row=12, column=0, columnspan=2)
+    
     # Get the test mode
     #Create the test mode button
     test_button = tk.Button(root, text="Test Mode", command=start_test)
@@ -205,9 +204,7 @@ def main():
     test_entry = tk.Entry(root)
     test_entry.grid(row=15, column=1)
     test_entry.config(state="disabled")
-    submit_button = tk.Button(root, text="Submit",
-                              command=lambda:
-                                  check_answer(test_entry.get(), test_word))
+    submit_button = tk.Button(root, text="Submit", state="disabled", command=check_answer)
     submit_button.grid(row=15, column=2)
     submit_button.config(state="disabled")
 
