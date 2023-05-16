@@ -100,9 +100,9 @@ def check_answer():
     answer = test_entry.get().strip()
     expected = vocabulary_list.loc[vocabulary_list["word"] == test_entry.get(), "translation"].iloc[0]
     if answer.lower() == expected.lower():
-        messagebox.showinfo("Correct!", "Your answer is correct!")
+        messagebox.showinfo("Well done!", "Your answer is correct!")
     else:
-        messagebox.showerror("Incorrect!", f"The correct answer is: {expected}")
+        messagebox.showerror("Ah-oh!", f"The correct answer is: {expected}")
 
 #===========================
 # Define the main function
