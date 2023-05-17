@@ -1,14 +1,8 @@
-"""
-This module defines the class Word,
-which represents a word in the database,
-that comes with definition, pronounciation, etc.
-The Word class also has methods for
-searching and testing the words.
-"""
 import tkinter as tk
 import random
 from tkinter import messagebox
 import pandas as pd
+import os
 
 # Define a class for vocabulary words
 class Word:
@@ -33,7 +27,6 @@ def add_word():
     init_category = category_entry.get()
     init_difficulty = difficulty_entry.get()
     
-    new_word = Word(init_word, init_translation, init_pronunciation, init_usage, init_category, init_difficulty)
     global vocabulary_list
     new_word = pd.DataFrame({"word": [init_word],
                              "translation": [init_translation],
@@ -49,12 +42,50 @@ def add_word():
     category_entry.delete(0, tk.END)
     status_label.config(text="New word added to database.", fg="green")
     root.after(2000, lambda: clear_status_label())
+    vocabulary_list = pd.concat([vocabulary_list, new_word], ignore_index=True)
+    vocabulary_list.to_csv("vocabulary_list.csv", index=False)
 
 # Define a function to display all words in the vocabulary list
+def initialize_database():
+    global vocabulary_list
+    vocabulary_list = pd.DataFrame(columns=["word", "translation", "pronunciation", "usage", "category", "difficulty"])
+
+    db_option = db_entry.get()
+
+    if db_option == "Chinese(simplified)/简体中文":
+        new_data = pd.read_csv('./vocabulary_chinese_simp.csv')
+    elif db_option == "French/Française":
+        new_data = pd.read_csv("./vocabulary_french.csv")
+    elif db_option == "Dutch/Nederlands":
+        new_data = pd.read_csv("./vocabulary_dutch.csv")
+    elif db_option == "German/Deutsch":
+        new_data = pd.read_csv("./vocabulary_german.csv")
+    elif db_option == "Customized set 1":
+        if os.path.isfile("./vocabulary_cs1.csv"):
+            new_data = pd.read_csv("./vocabulary_cs1.csv")
+        else:
+            new_data = pd.DataFrame(columns=["word", "translation", "pronunciation", "usage", "category", "difficulty"])
+            new_data.to_csv("vocabulary_cs1.csv", index=False, header=True)
+    else:  # Customized set 2:
+        if os.path.isfile("./vocabulary_cs2.csv"):
+            new_data = pd.read_csv("./vocabulary_cs2.csv")
+        else:
+            new_data = pd.DataFrame(columns=["word", "translation", "pronunciation", "usage", "category", "difficulty"])
+            new_data.to_csv("vocabulary_cs2.csv", index=False, header=True)
+
+    vocabulary_list = pd.concat([vocabulary_list, new_data], ignore_index=True)
+    display_words()
+    print(f"Checkpoint 1: vocabulary_list: {vocabulary_list}")
+
+
+
+new_data = pd.read_csv("./vocabulary_french.csv")
+print(f"Checkpoint 0.5: new_data: {new_data}")
 def display_words():
     word_list.delete(0, tk.END)
-    for index,row in vocabulary_list.iterrows():
+    for index, row in vocabulary_list.iterrows():
         word_list.insert(tk.END, row["word"])
+
 
 # Define a function to search for a specific word in the vocabulary list
 def search_word():
@@ -94,15 +125,16 @@ def start_test():
     submit_button.config(state="normal")
 
 def check_answer():
-    """
-    This function checks the answer.
-    """
     answer = test_entry.get().strip()
-    expected = vocabulary_list.loc[vocabulary_list["word"] == test_entry.get(), "translation"].iloc[0]
-    if answer.lower() == expected.lower():
-        messagebox.showinfo("Well done!", "Your answer is correct!")
+    matches = vocabulary_list[vocabulary_list["word"] == answer]
+    if not matches.empty:
+        expected = matches["translation"].iloc[0]
+        if answer.lower() == expected.lower():
+            messagebox.showinfo("Well done!", "Your answer is correct!")
+        else:
+            messagebox.showerror("Ah-oh!", f"The correct answer is: {expected}")
     else:
-        messagebox.showerror("Ah-oh!", f"The correct answer is: {expected}")
+        messagebox.showerror("Word not found", "The word is not found in the vocabulary list.")
 
 #===========================
 # Define the main function
@@ -111,7 +143,7 @@ def main():
     """
     This is the main function.
     """
-    global vocabulary_list,word_entry
+    global word_entry
     global translation_entry
     global pronunciation_entry
     global usage_entry
@@ -124,6 +156,8 @@ def main():
     global test_entry
     global submit_button
     global root
+    global db_entry
+    
     # Create the main window
     root = tk.Tk()
     root.title("Lanex: Your trusted Language Learning Assistant")
@@ -163,7 +197,7 @@ def main():
     # Difficulty
     difficulty_label = tk.Label(root,text = 'Difficulty')
     difficulty_label.grid(row=5, column = 0)
-    options = ["Easy", "Moderate", "Hard"]
+    options = ["I", "II", "III"]
     difficulty_entry = tk.StringVar(root)
     difficulty_entry.set(options[0]) # default option 
     difficulty_menu = tk.OptionMenu(root, difficulty_entry, *options)
@@ -187,10 +221,17 @@ def main():
     search_button = tk.Button(root, text="Search by Words", command=search_word)
     search_button.grid(row=8, column=2)
     
+    # Create the initialize database label
+    activate_database = tk.Button(root, text="Choose a dataset", command=initialize_database)
+    db_options = ["Chinese(simplified)/简体中文", "French/Française", "Dutch/Nederlands", "German/Deutsch", "Customized set 1", "Customized set 2"]
+    db_entry = tk.StringVar(root) 
+    db_entry.set(db_options[0])
+    db_menu = tk.OptionMenu(root, db_entry, *db_options)
+    db_menu.grid(row=6, column=4)
 
     # Create the word display label
     word_display = tk.Label(root, text="", font=("Arial", 12))
-    word_display.grid(row=9, column=0, columnspan=2)
+    word_display.grid(row=17, column=3, columnspan=2)
 
     # Create the status label
     status_label = tk.Label(root, text="", font=("Arial", 12))
@@ -213,8 +254,8 @@ def main():
                                   text="Start Test",
                                   command=start_test)
     start_test_button.grid(row=14, column=1)
+    
 
     root.mainloop()
-
 if __name__ == '__main__':
     main()
