@@ -76,6 +76,7 @@ def initialize_database():
     vocabulary_list = pd.concat([vocabulary_list, new_data], ignore_index=True)
     display_words()
     print(f"Checkpoint 1: vocabulary_list: {vocabulary_list}")
+    return vocabulary_list
 
 
 
@@ -132,7 +133,7 @@ def check_answer():
         if answer.lower() == expected.lower():
             messagebox.showinfo("Well done!", "Your answer is correct!")
         else:
-            messagebox.showerror("Ah-oh!", f"The correct answer is: {expected}")
+            messagebox.showerror("Nah-uh!", f"The correct answer is: {expected}")
     else:
         messagebox.showerror("Word not found", "The word is not found in the vocabulary list.")
 
@@ -223,6 +224,7 @@ def main():
     
     # Create the initialize database label
     activate_database = tk.Button(root, text="Choose a dataset", command=initialize_database)
+    activate_database.grid(row = 5, column=4)
     db_options = ["Chinese(simplified)/简体中文", "French/Française", "Dutch/Nederlands", "German/Deutsch", "Customized set 1", "Customized set 2"]
     db_entry = tk.StringVar(root) 
     db_entry.set(db_options[0])
