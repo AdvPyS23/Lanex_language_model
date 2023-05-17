@@ -37,3 +37,5 @@ To contact the author, visit [here](https://github.com/XiaoyueLenax/Advanced_Py/
 ## Mod log:
 1. Implemented basic database.
 2. Implemented tinker.py and generated a user interface, where user can store their data. [9th May]
+3. Developed a function to quiz vocabulary with [10th May]
+4. Read and write vocabulary databases to .csv files [11th May]
