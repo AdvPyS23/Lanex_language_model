@@ -148,18 +148,35 @@ def clear_status_label():
     status_label.config(text="")
 
 def start_test():
-    """
-    This function allows the user to start testing their words by typing.
-    """
-    # Select a random word from the vocabulary list
-    test_word = random.choice(vocabulary_list["word"])
-    # Enable the test entry widget
-    test_entry.config(state="normal")
-    test_entry.delete(0, tk.END)
-    test_entry.insert(0, test_word)
-    test_entry.focus_set()  # Set focus on the test entry widget to enable typing
-    # Enable the submit button
-    submit_button.config(state="normal")
+    # Create a new window for the test
+    blue = "#D49A89" # pastel blue
+    pink = "#557571"
+    
+    test_window = tk.Toplevel(root)
+    test_window.title("Test Mode")
+    test_window.config(bg=blue)
+    # Get the test mode
+    #Create the test mode button
+    test_button = tk.Button(test_window, text="Test Mode", command=start_test,bg=blue)
+    test_button.grid(row=15, column=3)
+    # Create the test mode entry widget and submit button
+    test_entry = tk.Entry(test_window)
+    test_entry.grid(row=15, column=4)
+    test_entry.config(state="disabled")
+    submit_button = tk.Button(test_window, text="Submit", state="disabled", command=check_answer,bg=blue)
+    submit_button.grid(row=15, column=5)
+    submit_button.config(state="disabled")
+    
+    # Disable the main window while the test window is open
+    root.withdraw()
+    
+    # Event handler for closing the test window
+    def close_test_window():
+        test_window.destroy()
+        root.deiconify()  # Re-enable the main window
+    
+    # Bind the close event of the test window to the close_test_window function
+    test_window.protocol("WM_DELETE_WINDOW", close_test_window)
 
 def check_answer():
     answer = test_entry.get().strip()
@@ -196,113 +213,111 @@ def main():
     global db_entry
     
     # Create the main window
+    # setting color theme:
+    blue = "#D49A89" # pastel blue
+    pink = "#557571" # paster pink
+    yellow = "#FFFFE0" # pastel yellow
     root = tk.Tk()
+    root.configure(bg=pink)
     root.title("Lanex: Your trusted Language Learning Assistant")
-    chinese_font = ("NotoSansCJK", 12)
+    chinese_font = ("NotoSansCJK", 11)
     
-    install_button = tk.Button(root, text="Install Fonts", command=install_fonts)
-    install_button.grid(row=18, column=6)
-
-
-    # User interface: setting up the buttons
-    # Word input
-    word_label = tk.Label(root, text="Word:",font=chinese_font)
-    word_label.grid(row=0, column=0)
-    word_entry = tk.Entry(root)
-    word_entry.grid(row=0, column=1)
-
-    # Translation
-    translation_label = tk.Label(root, text="Translation:",font =chinese_font)
-    translation_label.grid(row=1, column=0)
-    translation_entry = tk.Entry(root)
-    translation_entry.grid(row=1, column=1)
-
-    # Pronunciation
-    pronunciation_label = tk.Label(root, text="Pronunciation:",font=chinese_font)
-    pronunciation_label.grid(row=2, column=0)
-    pronunciation_entry = tk.Entry(root)
-    pronunciation_entry.grid(row=2, column=1)
-
-    # Usage / Application
-    usage_label = tk.Label(root, text="Usage:",font = chinese_font)
-    usage_label.grid(row=3, column=0)
-    usage_entry = tk.Entry(root)
-    usage_entry.grid(row=3, column=1)
-
-    # Category
-    category_label = tk.Label(root, text="Category:",font = chinese_font)
-    category_label.grid(row=4, column=0)
-    category_entry = tk.Entry(root)
-    category_entry.grid(row=4, column=1)
+    font_label = tk.Label(root, text = "Click to install fonts:",font = chinese_font, bg = pink)
+    font_label.grid(row=0,column=0)
+    install_button = tk.Button(root, text="Install Fonts", command=install_fonts, font = chinese_font,bg = blue)
+    install_button.grid(row=0, column=1)
     
-    # Difficulty
-    difficulty_label = tk.Label(root,text = 'Difficulty',font = chinese_font)
-    difficulty_label.grid(row=5, column = 0)
-    options = ["I", "II", "III"]
-    difficulty_entry = tk.StringVar(root)
-    difficulty_entry.set(options[0]) # default option 
-    difficulty_menu = tk.OptionMenu(root, difficulty_entry, *options)
-    difficulty_menu.grid(row=5, column=1)
-
-    # Create the add word button
-    add_button = tk.Button(root, text="Add Word", command=add_word,font = chinese_font)
-    add_button.grid(row=6, column=1)
-
-    # Create the display words button and listbox
-    display_button = tk.Button(root, text="Display Words", command=display_words,font=chinese_font)
-    display_button.grid(row=6, column=0)
-    word_list = tk.Listbox(root, font="Times")
-    word_list.grid(row=7, column=1)
-
-    # Create the search word widgets
-    search_label = tk.Label(root, text="Search Word:",font = chinese_font)
-    search_label.grid(row=8, column=0)
-    search_entry = tk.Entry(root)
-    search_entry.grid(row=8, column=1)
-    search_button = tk.Button(root, text="Search by Words", command=search_word)
-    search_button.grid(row=9, column=2)
-    
-    # search by difficulty
-    search_difficulty_button = tk.Button(root, text = "Search by Difficulty",command=search_word_difficulty)
-    search_difficulty_button.grid(row=10, column=2)
-    
-    
-    
-    # Create the initialize database label
-    activate_database = tk.Button(root, text="Choose a dataset", command=initialize_database,font=chinese_font)
-    activate_database.grid(row = 5, column=4)
+    # To begin Create the initialize database label
+    activate_database_label = tk.Label(root, text = "Choose a dataset:",font = chinese_font,bg = pink)
+    activate_database_label.grid(row = 1, column=0)
+    activate_database = tk.Button(root, text="Activate this dataset", command=initialize_database,font=chinese_font,bg = blue)
+    activate_database.grid(row = 2, column=1)
     db_options = ["French/Française", "Dutch/Nederlands", "Chinese(simplified)/简体中文", "German/Deutsch", "Customized set 1", "Customized set 2"]
     db_entry = tk.StringVar(root) 
     db_entry.set(db_options[0])
     db_menu = tk.OptionMenu(root, db_entry, *db_options)
-    db_menu.config(font = chinese_font)
-    db_menu.grid(row=6, column=4)
+    db_menu.config(font = chinese_font, bg=blue)
+    db_menu.grid(row=1, column=1)
+
+    # User interface: setting up the buttons
+    # Word input
+    word_label = tk.Label(root, text="Word:",font=chinese_font,bg = pink)
+    word_label.grid(row=3, column=0)
+    word_entry = tk.Entry(root)
+    word_entry.grid(row=3, column=1)
+
+    # Translation
+    translation_label = tk.Label(root, text="Translation:",font =chinese_font,bg = pink)
+    translation_label.grid(row=4, column=0)
+    translation_entry = tk.Entry(root)
+    translation_entry.grid(row=4, column=1)
+
+    # Pronunciation
+    pronunciation_label = tk.Label(root, text="Pronunciation:",font=chinese_font,bg = pink)
+    pronunciation_label.grid(row=5, column=0)
+    pronunciation_entry = tk.Entry(root)
+    pronunciation_entry.grid(row=5, column=1)
+
+    # Usage / Application
+    usage_label = tk.Label(root, text="Usage:",font = chinese_font,bg = pink)
+    usage_label.grid(row=6, column=0)
+    usage_entry = tk.Entry(root)
+    usage_entry.grid(row=6, column=1)
+
+    # Category
+    category_label = tk.Label(root, text="Category:",font = chinese_font,bg = pink)
+    category_label.grid(row=7, column=0)
+    category_entry = tk.Entry(root)
+    category_entry.grid(row=7, column=1)
+    
+    # Difficulty
+    difficulty_label = tk.Label(root,text = 'Difficulty:',font = chinese_font,bg = pink)
+    difficulty_label.grid(row=8, column = 0)
+    options = ["I", "II", "III"]
+    difficulty_entry = tk.StringVar(root)
+    difficulty_entry.set(options[0]) # default option 
+    difficulty_menu = tk.OptionMenu(root, difficulty_entry, *options)
+    difficulty_menu.grid(row=8, column=1)
+    difficulty_menu.config(font = chinese_font)
+
+    # Create the add word button
+    add_button = tk.Button(root, text="Add to current dataset", command=add_word,font = chinese_font,bg=blue)
+    add_button.grid(row=9, column=1)
+
+    # Create the display words button and listbox
+    #display_button = tk.Button(root, text="Display Words", command=display_words,font=chinese_font,bg=blue)
+    #display_button.grid(row=11, column=0)
+    word_list = tk.Listbox(root, font=chinese_font)
+    word_list.grid(row=15, column=1)
+
+    # -----------------------------------------------------------------------
+    # Create the search word widgets
+    search_label = tk.Label(root, text="Search words:",font = chinese_font,bg = pink)
+    search_label.grid(row=14, column=0)
+    search_entry = tk.Entry(root)
+    search_entry.grid(row=14, column=1, sticky="ew", columnspan=1)
+    search_button = tk.Button(root, text="Search Words", command=search_word, font = chinese_font,bg=blue)
+    search_button.grid(row=14, column=0, sticky="ew")
+    
+    # search by difficulty
+    search_difficulty_button = tk.Button(root, text = "Search Difficulty",command=search_word_difficulty, font = chinese_font,bg=blue)
+    search_difficulty_button.grid(row=15, column=0,sticky="ew")
+    
+    
 
     # Create the word display label
-    word_display = tk.Label(root, text="", font=chinese_font)
-    word_display.grid(row=17, column=3, columnspan=2)
+    word_display = tk.Label(root, text="", font=chinese_font,bg = pink)
+    word_display.grid(row=17, column=6, columnspan=2)
 
     # Create the status label
-    status_label = tk.Label(root, text="", font=chinese_font)
-    status_label.grid(row=12, column=0, columnspan=2)
+    status_label = tk.Label(root, text="", font=chinese_font,bg = pink)
+    status_label.grid(row=12, column=3, columnspan=2)
     
-    # Get the test mode
-    #Create the test mode button
-    test_button = tk.Button(root, text="Test Mode", command=start_test)
-    test_button.grid(row=15, column=0)
-    # Create the test mode entry widget and submit button
-    test_entry = tk.Entry(root)
-    test_entry.grid(row=15, column=1)
-    test_entry.config(state="disabled")
-    submit_button = tk.Button(root, text="Submit", state="disabled", command=check_answer)
-    submit_button.grid(row=15, column=2)
-    submit_button.config(state="disabled")
+    
 
     # Create the start test button
-    start_test_button = tk.Button(root,
-                                  text="Start Test",
-                                  command=start_test)
-    start_test_button.grid(row=14, column=1)
+    start_test_button = tk.Button(root, text="Start Test", command=start_test, bg=blue, font=chinese_font)
+    start_test_button.grid(row=14, column=4)
     
 
     root.mainloop()
