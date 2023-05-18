@@ -156,6 +156,7 @@ def start_test():
     test_window = tk.Toplevel(root)
     test_window.title("Test Mode")
     test_window.config(bg=blue)
+    test_window.geometry("400x500")
 
     # Get the test mode
     # Create the test mode label
@@ -164,37 +165,38 @@ def start_test():
 
     # Create the test mode entry widget and submit button
     test_entry = tk.Entry(test_window)
-    test_entry.grid(row=0, column=1, padx=10, pady=10)
+    test_entry.grid(row=1, column=1, padx=10, pady=10)
 
     def check_answer():
         user_answer = test_entry.get().strip()
-        correct_answer = vocabulary_list["translation"].iloc[0]
-        if user_answer.lower() == correct_answer.lower():
+        question_word = question_label.cget("text").split(":")[-1].strip()
+        correct_translation = vocabulary_list.loc[vocabulary_list["word"] == question_word, "translation"].iloc[0]
+        if user_answer.lower() == correct_translation.lower():
             messagebox.showinfo("Result", "Correct!")
         else:
-            messagebox.showinfo("Result", f"Incorrect! The correct answer is: {correct_answer}")
+            messagebox.showinfo("Result", f"Incorrect! The correct answer is: {correct_translation}")
 
     def ask_question_translation():
-        # Select a random word from the vocabulary list
-        question_word = random.choice(vocabulary_list["word"])
-        correct_translation = vocabulary_list["translation"]
+        # Select a random word and its translation from the vocabulary list
+        question_word, correct_translation = random.sample(list(zip(vocabulary_list["word"], vocabulary_list["translation"])), 1)[0]
 
         # Set the question label text
-        question_label.config(text=f"Question: Type in the translation of word: {question_word}")
+        question_label.config(text=f"Question: Type in the translation of the word: {question_word}",bg=blue)
+        question_label.grid(row = 0, column = 2)
 
-        # Enable the entry and submit button
         test_entry.config(state="normal")
         submit_button.config(state="normal")
+        test_entry.grid(row=1, column=2)
 
         # Clear the entry field
         test_entry.delete(0, tk.END)
 
         # Set focus on the entry field
         test_entry.focus_set()
-
+    
     # Create the submit button
     submit_button = tk.Button(test_window, text="Submit", state="disabled", command=check_answer, bg=blue)
-    submit_button.grid(row=0, column=2, padx=10, pady=10)
+    submit_button.grid(row=2, column=2, padx=10, pady=10)
 
     # Bind the Enter key to the submit button
     test_window.bind('<Return>', lambda event: submit_button.invoke())
@@ -254,10 +256,18 @@ def main():
     pink = "#557571" # paster pink
     yellow = "#FFFFE0" # pastel yellow
     root = tk.Tk()
-    root.geometry("600x600") 
+    root.geometry("800x800") 
     root.configure(bg=pink)
     root.title("Lanex: Your trusted Language Learning Assistant")
     chinese_font = ("NotoSansCJK", 11)
+    
+    # Cosmetics
+    image_path = "./pusheen_small.png"
+    image = tk.PhotoImage(file=image_path)
+
+    # Create a label to display the image
+    image_label = tk.Label(root, image=image,bg=pink)
+    image_label.grid(row = 0, column=15)
     
     font_label = tk.Label(root, text = "Click to install fonts:",font = chinese_font, bg = pink)
     font_label.grid(row=0,column=0)
@@ -267,7 +277,9 @@ def main():
     # To begin Create the initialize database label
     activate_database_label = tk.Label(root, text = "Choose a dataset:",font = chinese_font,bg = pink)
     activate_database_label.grid(row = 1, column=0)
-    activate_database = tk.Button(root, text="Activate this dataset", command=initialize_database,font=chinese_font,bg = blue)
+    activate_database = tk.Button(root, text="Activate this dataset",
+                                  command=initialize_database,font=chinese_font,bg = blue,
+                                  height = 3)
     activate_database.grid(row = 2, column=1)
     db_options = ["French/Française", "Dutch/Nederlands", "Chinese(simplified)/简体中文", "German/Deutsch", "Customized set 1", "Customized set 2"]
     db_entry = tk.StringVar(root) 
@@ -346,7 +358,7 @@ def main():
     word_display = tk.Label(root, text="", font=chinese_font,bg = pink)
     word_display.grid(row=17, column=6, columnspan=2)
 
-    # Create the status label
+    # Create the status label - this to make the text fade away slowly
     status_label = tk.Label(root, text="", font=chinese_font,bg = pink)
     status_label.grid(row=12, column=3, columnspan=2)
     
