@@ -158,6 +158,10 @@ def start_test():
     test_window.config(bg=blue)
     test_window.geometry("400x500")
 
+    # Variables to track score and question count
+    score = 0
+    question_count = 0
+
     # Get the test mode
     # Create the test mode label
     question_label = tk.Label(test_window, text="Question:")
@@ -168,21 +172,33 @@ def start_test():
     test_entry.grid(row=1, column=1, padx=10, pady=10)
 
     def check_answer():
+        nonlocal score, question_count
+
         user_answer = test_entry.get().strip()
         question_word = question_label.cget("text").split(":")[-1].strip()
         correct_translation = vocabulary_list.loc[vocabulary_list["word"] == question_word, "translation"].iloc[0]
         if user_answer.lower() == correct_translation.lower():
             messagebox.showinfo("Result", "Correct!")
+            score += 1
+
+        question_count += 1
+
+        # Check if all questions have been answered
+        if question_count == 10:
+            # Calculate the score percentage
+            score_percentage = (score / 10) * 100
+            messagebox.showinfo("Test Completed", f"correct answer: {score} out of 10. Score: {score_percentage}%")
+            close_test_window()
         else:
-            messagebox.showinfo("Result", f"Incorrect! The correct answer is: {correct_translation}")
+            ask_question_translation()
 
     def ask_question_translation():
         # Select a random word and its translation from the vocabulary list
         question_word, correct_translation = random.sample(list(zip(vocabulary_list["word"], vocabulary_list["translation"])), 1)[0]
 
         # Set the question label text
-        question_label.config(text=f"Question: Type in the translation of the word: {question_word}",bg=blue)
-        question_label.grid(row = 0, column = 2)
+        question_label.config(text=f"Question: Type in the translation of the word: {question_word}", bg=blue)
+        question_label.grid(row=0, column=2)
 
         test_entry.config(state="normal")
         submit_button.config(state="normal")
@@ -193,7 +209,7 @@ def start_test():
 
         # Set focus on the entry field
         test_entry.focus_set()
-    
+
     # Create the submit button
     submit_button = tk.Button(test_window, text="Submit", state="disabled", command=check_answer, bg=blue)
     submit_button.grid(row=2, column=2, padx=10, pady=10)
