@@ -149,34 +149,70 @@ def clear_status_label():
 
 def start_test():
     # Create a new window for the test
-    blue = "#D49A89" # pastel blue
+    global vocabulary_list
+    blue = "#D49A89"  # pastel blue
     pink = "#557571"
-    
+
     test_window = tk.Toplevel(root)
     test_window.title("Test Mode")
     test_window.config(bg=blue)
+
     # Get the test mode
-    #Create the test mode button
-    test_button = tk.Button(test_window, text="Test Mode", command=start_test,bg=blue)
-    test_button.grid(row=15, column=3)
+    # Create the test mode label
+    question_label = tk.Label(test_window, text="Question:")
+    question_label.grid(row=0, column=0, padx=10, pady=10)
+
     # Create the test mode entry widget and submit button
     test_entry = tk.Entry(test_window)
-    test_entry.grid(row=15, column=4)
-    test_entry.config(state="disabled")
-    submit_button = tk.Button(test_window, text="Submit", state="disabled", command=check_answer,bg=blue)
-    submit_button.grid(row=15, column=5)
-    submit_button.config(state="disabled")
-    
+    test_entry.grid(row=0, column=1, padx=10, pady=10)
+
+    def check_answer():
+        user_answer = test_entry.get().strip()
+        correct_answer = vocabulary_list["translation"].iloc[0]
+        if user_answer.lower() == correct_answer.lower():
+            messagebox.showinfo("Result", "Correct!")
+        else:
+            messagebox.showinfo("Result", f"Incorrect! The correct answer is: {correct_answer}")
+
+    def ask_question_translation():
+        # Select a random word from the vocabulary list
+        question_word = random.choice(vocabulary_list["word"])
+        correct_translation = vocabulary_list["translation"]
+
+        # Set the question label text
+        question_label.config(text=f"Question: Type in the translation of word: {question_word}")
+
+        # Enable the entry and submit button
+        test_entry.config(state="normal")
+        submit_button.config(state="normal")
+
+        # Clear the entry field
+        test_entry.delete(0, tk.END)
+
+        # Set focus on the entry field
+        test_entry.focus_set()
+
+    # Create the submit button
+    submit_button = tk.Button(test_window, text="Submit", state="disabled", command=check_answer, bg=blue)
+    submit_button.grid(row=0, column=2, padx=10, pady=10)
+
+    # Bind the Enter key to the submit button
+    test_window.bind('<Return>', lambda event: submit_button.invoke())
+
     # Disable the main window while the test window is open
     root.withdraw()
-    
+
     # Event handler for closing the test window
     def close_test_window():
         test_window.destroy()
         root.deiconify()  # Re-enable the main window
-    
+
     # Bind the close event of the test window to the close_test_window function
     test_window.protocol("WM_DELETE_WINDOW", close_test_window)
+
+    # Start the test by asking the first question
+    ask_question_translation()
+
 
 def check_answer():
     answer = test_entry.get().strip()
@@ -218,6 +254,7 @@ def main():
     pink = "#557571" # paster pink
     yellow = "#FFFFE0" # pastel yellow
     root = tk.Tk()
+    root.geometry("600x600") 
     root.configure(bg=pink)
     root.title("Lanex: Your trusted Language Learning Assistant")
     chinese_font = ("NotoSansCJK", 11)
@@ -313,11 +350,13 @@ def main():
     status_label = tk.Label(root, text="", font=chinese_font,bg = pink)
     status_label.grid(row=12, column=3, columnspan=2)
     
-    
+    # Test interface:
+    start_test_label = tk.Label(root, text = "Begin Testing", bg=pink)
+    start_test_label.grid(row = 8, column = 6,columnspan=2)
 
     # Create the start test button
     start_test_button = tk.Button(root, text="Start Test", command=start_test, bg=blue, font=chinese_font)
-    start_test_button.grid(row=14, column=4)
+    start_test_button.grid(row=12, column=6,columnspan=3)
     
 
     root.mainloop()
