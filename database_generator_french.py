@@ -12,7 +12,7 @@ data = [
     {"word": "poisson", "translation": "fish", "pronunciation": "pwa.sɔ̃", "usage": "Je n'aime pas manger du poisson.", "category": "vehnicle", "difficulty": "I"},
     {"word": "banane", "translation": "banana", "pronunciation": "ba.nan", "usage": "J'ai acheté une banane au marché.", "category": "fruit", "difficulty": "I"},
     {"word": "orange", "translation": "orange", "pronunciation": "ɔ.ʁɑ̃ʒ", "usage": "Elle a pressé une orange pour faire du jus.", "category": "fruit", "difficulty": "I"},
-    {"word": "mangue", "translation": "mango", "pronunciation": "mɑ̃ɡ", "usage": "La mangue est un fruit exotique très savoureux.", "category": "fruit", "difficulty": "III"}
+    {"word": "mangue", "translation": "mango", "pronunciation": "mɑ̃ɡ", "usage": "La mangue est un fruit exotique très savoureux.", "category": "fruit", "difficulty": "III"},
     {"word": "pêche", "translation": "peach", "pronunciation": "pɛʃ", "usage": "Il a mangé une pêche juteuse.", "category": "fruit", "difficulty": "II"},
     {"word": "framboise", "translation": "raspberry", "pronunciation": "fʁɑ̃bwaz", "usage": "Elle a préparé une tarte aux framboises.", "category": "fruits", "difficulty": "III"},
     {"word": "chat", "translation": "cat", "pronunciation": "ʃa", "usage": "Le chat dort sur le canapé.", "category": "animal", "difficulty": "I"},
