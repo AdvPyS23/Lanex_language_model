@@ -199,6 +199,7 @@ def start_test():
         # Check if all questions have been answered
         if question_count == 10:
             # Calculate the score percentage
+            # Add piecharts and other graphs here.
             score_percentage = (score / 10) * 100
             messagebox.showinfo("Test Completed", f"correct answer: {score} out of 10. Score: {score_percentage}%")
             close_test_window()
