@@ -33,7 +33,7 @@ def german_vocab():
     use_de = ["Hallo, wie geht's?", "Ja, genau", "Nein, bitte nicht", "Danke für die Blumen", "Nächste Ausfahrt links", "Nächste Ausfahrt rechts", "Bis bald. Tschüss", "Ich gehe zur Schule", "Ich studiere an der Universität", "Ich studiere Bioinformatik"]
     en_de_data['Usage'] = use_de
     #save locally to .csv file
-    en_de_data.to_csv("~/EN-DE.csv")
+    en_de_data.to_csv("//wsl.localhost/Ubuntu/home/laura--force-badname/adv_python_project/remote_clone/vocabulary_german.csv")
     
 def dutch_vocab():
     #Dutch vocabulary dataset
@@ -58,5 +58,6 @@ def dutch_vocab():
     use_nl = ["Hallo, hoe gaat het?", "Ja, ik ben het ermee eens", "Nee, dat hoef ik niet", "Bedankt voor de bloemen", "Volgende afslag naar links", "Ik schrijf met rechts", "Tot de volgende keer. Doei", "Ik zit op school", "Ik studeer aan de universiteit", "Ik studeer Bioinformatica"]
     en_nl_data['Usage'] = use_nl
     #save locally to .csv file
-    en_nl_data.to_csv("~/EN-NL.csv")
+    en_nl_data.to_csv("//wsl.localhost/Ubuntu/home/laura--force-badname/adv_python_project/remote_clone/vocabulary_dutch.csv")
 
+#//wsl.localhost/Ubuntu/home/laura--force-badname/adv_python_project/remote_clone
