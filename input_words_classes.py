@@ -42,7 +42,7 @@ def install_fonts():
 
 def install_databases():
     french_command = "python3 database_generator_french.py"
-    chinese_command = "python3 database_genertaor_chinese_simp.py"
+    chinese_command = "python3 database_generator_chinese_simp.py"
     dutch_command = "python3 database_generator_dutch.py"
     german_command = "python3 database_generator_german.py"
     if os.path.isfile("./vocabulary_dutch.csv") and os.path.isfile("./vocabulary_chinese_simp.csv") and os.path.isfile("./vocabulary_german.csv") and os.path.isfile("./vocabulary_french.csv"):
@@ -93,7 +93,7 @@ def add_word():
     
 
 # Define a function to display all words in the vocabulary list
-def initialize_database():
+def choose_database():
     global vocabulary_list
     vocabulary_list = pd.DataFrame(columns=["word", "translation", "pronunciation", "usage", "category", "difficulty"])
 
@@ -126,9 +126,6 @@ def initialize_database():
     return vocabulary_list
 
 
-
-new_data = pd.read_csv("./vocabulary_french.csv")
-print(f"Checkpoint 0.5: new_data: {new_data}")
 def display_words():
     word_list.delete(0, tk.END)
     for index, row in vocabulary_list.iterrows():
@@ -271,6 +268,8 @@ def check_answer():
             messagebox.showerror("Nah-uh!", f"The correct answer is: {expected}")
     else:
         messagebox.showerror("Word not found", "The word is not found in the vocabulary list.")
+        
+# === special zone dedicated to the Chinese input
 
 #===========================
 # Define the main function
@@ -320,14 +319,14 @@ def main():
     
     initial_bd = tk.Label(root, text = "Initialize \n built-in dataset:", font = chinese_font, bg=pink)
     initial_bd.grid(row=1,column=0)
-    database_button = tk.Button(root, text = "Import database locally", command = initialize_database,bg=blue)
+    database_button = tk.Button(root, text = "Import database locally", command = install_databases,bg=blue)
     database_button.grid(row=1,column=1)
     
     # To begin Create the initialize database label
     activate_database_label = tk.Label(root, text = "IMPORTANT: \n To start, \n choose a dataset \n + activate",font = chinese_font,bg = pink)
     activate_database_label.grid(row = 2, column=0)
-    activate_database = tk.Button(root, text="Activate this dataset",
-                                  command=initialize_database,font=chinese_font,bg = blue,
+    activate_database = tk.Button(root, text="Activate or update this dataset",
+                                  command=choose_database,font=chinese_font,bg = blue,
                                   height = 3)
     activate_database.grid(row = 3, column=1)
     db_options = ["French/Française", "Dutch/Nederlands", "Chinese(simplified)/简体中文", "German/Deutsch", "Customized set 1", "Customized set 2"]
@@ -393,13 +392,13 @@ def main():
     search_label = tk.Label(root, text="Search words:",font = chinese_font,bg = pink)
     search_label.grid(row=14, column=0)
     search_entry = tk.Entry(root)
-    search_entry.grid(row=14, column=1, sticky="ew")
+    search_entry.grid(row=14, column=1)
     search_button = tk.Button(root, text="Search Words", command=search_word, font = chinese_font,bg=blue)
     search_button.grid(row=14, column=0, sticky="ew")
     
     # search by difficulty
     search_difficulty_button = tk.Button(root, text = "Search Difficulty",command=search_word_difficulty, font = chinese_font,bg=blue)
-    search_difficulty_button.grid(row=14, column=3,sticky="ew")
+    search_difficulty_button.grid(row=15, column=0,sticky="ew")
     
     
 
@@ -412,7 +411,7 @@ def main():
     status_label.grid(row=12, column=3, columnspan=2)
     
     # Test interface:
-    start_test_label = tk.Label(root, text = "Begin Testing with this dataset", bg=pink, wraplength=150 )
+    start_test_label = tk.Label(root, text = "Feeling confident? \n Begin Testing with this dataset!", bg=pink, wraplength=150 )
     start_test_label.grid(row = 1, column=10,columnspan=2)
 
     # Create the start test button
