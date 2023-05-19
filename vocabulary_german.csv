@@ -1,11 +1,12 @@
-,English,German,Category,Difficulty,Pronounciation,Usage
-0,Hello,Hallo,Basic,I,halo,"Hallo, wie geht's?"
-1,Yes,Ja,Basic,I,jaː,"Ja, genau"
-2,No,Nein,Basic,I,naɪ̯n,"Nein, bitte nicht"
-3,Thank you,Danke,Basic,I,daŋkə,Danke für die Blumen
-4,Left,Links,Direction,I,lɪŋks,Nächste Ausfahrt links
-5,Right,Rechts,Direction,I,rɛçts,Nächste Ausfahrt rechts
-6,Bye,Tschüss,Basic,I,tʃʏs,Bis bald. Tschüss
-7,School,Schule,School,I,ʃuːlə,Ich gehe zur Schule
-8,University,Universität,School,II,univɛɐ̯ziˈtɛːt,Ich studiere an der Universität
-9,Bioinformatics,Bioinformatik,School,III,bijoɪnfɔʁˈmaːtɪk,Ich studiere Bioinformatik
+word,translation,pronunciation,usage,category,difficulty
+hallo,hello,halo,"Hallo, wie geht's?",greeting,I
+ja,yes,jaː,"Ja, genau.",basic,I
+nein,no,naɪ̯n,"Nein, bitte nicht.",basic,I
+danke,thank you,daŋkə,Danke für die Blumen.,basic,I
+links,left,lɪŋks,Nächste Ausfahrt links.,direction,I
+rechts,rights,rɛçts,Nächste Ausfahrt rechts.,direction,I
+tschüss,bye,tʃʏs,Bis bald. Tschüss.,parting,I
+schule,school,ʃuːlə,Ich gehe zur Schule.,education,I
+universität,university,univɛɐ̯ziˈtɛːt,Ich studiere an der Universität.,education,II
+bioinformatik,bioinformatics,bijoɪnfɔʁˈmaːtɪk,Ich studiere Bioinformatik.,education,III
+auto,car,ɑuto,Ich fahre das Auto.,vehicle,II

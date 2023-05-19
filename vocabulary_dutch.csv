@@ -1,11 +1,12 @@
-,English,Dutch,Category,Difficulty,Pronounciation,Usage
-0,Hello,Hallo,Basics,I,hɑlo,"Hallo, hoe gaat het?"
-1,Yes,Ja,Basics,I,ja,"Ja, ik ben het ermee eens"
-2,No,Nee,Basics,I,ne,"Nee, dat hoef ik niet"
-3,Thank you,Bedankt,Basics,I,bədɑŋkt,Bedankt voor de bloemen
-4,Left,Links,Directions,I,lɪŋks,Volgende afslag naar links
-5,Right,Rechts,Directions,I,rɛx(t)s,Ik schrijf met rechts
-6,Bye,Doei,Basics,I,duj,Tot de volgende keer. Doei
-7,School,School,School,I,sxol,Ik zit op school
-8,University,Universiteit,School,II,ynivɛrsi'tɛit,Ik studeer aan de universiteit
-9,Bioinformatics,Bioinformatica,School,III,bijoɪnfɔrˈmatika,Ik studeer Bioinformatica
+word,translation,pronunciation,usage,category,difficulty
+hallo,hello,halo,"Hallo, hoe gaat het?",greeting,I
+ja,yes,ja,"Ja, ik ben het ermee eens.",basic,I
+nee,no,ne,"Nee, dat hoef ik niet.",basic,I
+bedankt,thank you,bədɑŋkt,Bedankt voor de bloemen.,basic,I
+links,left,lɪŋks,Volgende afslag naar links.,direction,I
+rechts,rights,rɛx(t)s,Ik schrijf met rechts.,direction,I
+doei,bye,duj,Tot de volgende keer. Doei.,parting,I
+school,school,sxol,Ik zit op school.,education,I
+universiteit,university,ynivɛrsi'tɛit,Ik studeer aan de universiteit.,education,II
+bioinformatica,bioinformatics,bijoɪnfɔrˈmatika,Ik studeer Bioinformatica.,education,III
+auto,car,ɑuto,Ik rij in de auto.,vehicle,II
