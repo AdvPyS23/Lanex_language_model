@@ -46,7 +46,6 @@ def add_word():
     init_usage = usage_entry.get()
     init_category = category_entry.get()
     init_difficulty = difficulty_entry.get()
-    
     global vocabulary_list
     new_word = pd.DataFrame({"word": [init_word],
                              "translation": [init_translation],
@@ -55,15 +54,29 @@ def add_word():
                              "category": [init_category],
                              "difficulty": [init_difficulty]})
     vocabulary_list = pd.concat([vocabulary_list, new_word], ignore_index=True)
+    
+    # clean input box after adding the word
     word_entry.delete(0, tk.END)
     translation_entry.delete(0, tk.END)
     pronunciation_entry.delete(0, tk.END)
     usage_entry.delete(0, tk.END)
     category_entry.delete(0, tk.END)
-    status_label.config(text="New word added to database.", fg="green")
+    status_label.config(text="New word added to current database.", fg="black")
+    # the added indication disappears after 2 seconds:
     root.after(2000, lambda: clear_status_label())
-    vocabulary_list = pd.concat([vocabulary_list, new_word], ignore_index=True)
-    vocabulary_list.to_csv("vocabulary_list.csv", index=False)
+    if db_entry.get() == "Chinese(simplified)/简体中文":
+        vocabulary_list.to_csv("vocabulary_list_chinese_simp.csv", index=False)
+    elif db_entry.get() == "French/Française":
+        vocabulary_list.to_csv("vocabulary_list_chinese_french.csv", index=False)
+    elif db_entry.get() == "Dutch/Nederlands":
+        vocabulary_list.to_csv("vocabulary_list_dutch.csv", index=False)
+    elif db_entry.get() == "German/Deutsch":
+        vocabulary_list.to_csv("vocabulary_list_german.csv", index=False)
+    elif db_entry.get() == "Customized set 1":
+        vocabulary_list.to_csv("vocabulary_cs1.csv", index=False, header=True)
+    else:  # Customized set 2:
+        vocabulary_list.to_csv("vocabulary_list_chinese_simp.csv", index=False)
+    
 
 # Define a function to display all words in the vocabulary list
 def initialize_database():

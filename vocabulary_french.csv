@@ -1,4 +1,12 @@
 word,translation,pronunciation,usage,category,difficulty
-apple,pomme,ˈæpəl,I ate an apple today.,fruits,easy
-house,maison,haʊs,This is my house.,buildings,easy
-car,voiture,kɑr,I have a red car.,vehicles,easy
+pomme,apple,pɔm,J'ai mangé une pomme aujourd'hui.,fruit,I
+maison,house,mɛ.zɔ̃,J'ai une maison.,building,I
+voiture,car,vwɑˈtjʊə(ɹ),J'ai une voiture rouge.,vehnicle,I
+poisson,fish,pwa.sɔ̃,Je n'aime pas manger du poisson.,vehnicle,I
+banane,banana,ba.nan,J'ai acheté une banane au marché.,fruit,I
+orange,orange,ɔ.ʁɑ̃ʒ,Elle a pressé une orange pour faire du jus.,fruit,I
+mangue,mango,mɑ̃ɡ,La mangue est un fruit exotique très savoureux.,fruit,III
+pêche,peach,pɛʃ,Il a mangé une pêche juteuse.,fruit,II
+framboise,raspberry,fʁɑ̃bwaz,Elle a préparé une tarte aux framboises.,fruits,III
+chat,cat,ʃa,Le chat dort sur le canapé.,animal,I
+livre,book,livʁ,J'ai acheté un nouveau livre à la librairie.,education,II
