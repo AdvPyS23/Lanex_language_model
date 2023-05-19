@@ -39,6 +39,20 @@ def install_fonts():
         subprocess.run(command, shell=True)
         print(f"The {font_name} font has been installed.")
 # Define a function to add a new word to the vocabulary list
+
+def install_databases():
+    french_command = "python3 database_generator_french.py"
+    chinese_command = "python3 database_genertaor_chinese_simp.py"
+    dutch_command = "python3 database_generator_dutch.py"
+    german_command = "python3 database_generator_german.py"
+    if os.path.isfile("./vocabulary_dutch.csv") and os.path.isfile("./vocabulary_chinese_simp.csv") and os.path.isfile("./vocabulary_german.csv") and os.path.isfile("./vocabulary_french.csv"):
+        print("database detected locally.")
+    else:
+        subprocess.run(french_command, shell=True)
+        subprocess.run(chinese_command, shell=True)
+        subprocess.run(dutch_command, shell=True)
+        subprocess.run(german_command, shell=True)
+    
 def add_word():
     init_word = word_entry.get()
     init_translation = translation_entry.get()
@@ -148,7 +162,7 @@ def search_word_difficulty():
                                  f"Pronunciation: {row['pronunciation']}\n"
                                  f"Usage: {row['usage']}\n"
                                  f"Category: {row['category']}\n"
-                                 f"Difficulty: {row['difficulty']}")
+                                 f"Difficulty: {row['difficulty']}",wraplength = 100)
     else:
         word_display.config(text="Word not found.")
 
@@ -296,71 +310,76 @@ def main():
 
     # Create a label to display the image
     image_label = tk.Label(root, image=image,bg=pink)
-    image_label.grid(row = 0, column=9)
+    image_label.grid(row = 0, column=10)
     
     font_label = tk.Label(root, text = "Click to install fonts:",font = chinese_font, bg = pink)
     font_label.grid(row=0,column=0)
     install_button = tk.Button(root, text="Install Fonts", command=install_fonts, font = chinese_font,bg = blue)
     install_button.grid(row=0, column=1)
     
+    initial_bd = tk.Label(root, text = "Initialize Lanex built-in dataset:", font = chinese_font, bg=pink)
+    initial_bd.grid(row=1,column=0)
+    database_button = tk.Button(root, text = "Import database locally", command = initialize_database,bg=blue)
+    database_button.grid(row=1,column=1)
+    
     # To begin Create the initialize database label
-    activate_database_label = tk.Label(root, text = "Choose a dataset:",font = chinese_font,bg = pink)
-    activate_database_label.grid(row = 1, column=0)
+    activate_database_label = tk.Label(root, text = "IMPORTANT: \n To start, \n choose a dataset \n + activate",font = chinese_font,bg = pink)
+    activate_database_label.grid(row = 2, column=0)
     activate_database = tk.Button(root, text="Activate this dataset",
                                   command=initialize_database,font=chinese_font,bg = blue,
                                   height = 3)
-    activate_database.grid(row = 2, column=1)
+    activate_database.grid(row = 3, column=1)
     db_options = ["French/Française", "Dutch/Nederlands", "Chinese(simplified)/简体中文", "German/Deutsch", "Customized set 1", "Customized set 2"]
     db_entry = tk.StringVar(root) 
     db_entry.set(db_options[0])
     db_menu = tk.OptionMenu(root, db_entry, *db_options)
     db_menu.config(font = chinese_font, bg=blue)
-    db_menu.grid(row=1, column=1)
+    db_menu.grid(row=2, column=1)
 
     # User interface: setting up the buttons
     # Word input
     word_label = tk.Label(root, text="Word:",font=chinese_font,bg = pink)
-    word_label.grid(row=3, column=0)
+    word_label.grid(row=4, column=0)
     word_entry = tk.Entry(root)
-    word_entry.grid(row=3, column=1)
+    word_entry.grid(row=4, column=1)
 
     # Translation
     translation_label = tk.Label(root, text="Translation:",font =chinese_font,bg = pink)
-    translation_label.grid(row=4, column=0)
+    translation_label.grid(row=5, column=0)
     translation_entry = tk.Entry(root)
-    translation_entry.grid(row=4, column=1)
+    translation_entry.grid(row=5, column=1)
 
     # Pronunciation
     pronunciation_label = tk.Label(root, text="Pronunciation:",font=chinese_font,bg = pink)
-    pronunciation_label.grid(row=5, column=0)
+    pronunciation_label.grid(row=6, column=0)
     pronunciation_entry = tk.Entry(root)
-    pronunciation_entry.grid(row=5, column=1)
+    pronunciation_entry.grid(row=6, column=1)
 
     # Usage / Application
     usage_label = tk.Label(root, text="Usage:",font = chinese_font,bg = pink)
-    usage_label.grid(row=6, column=0)
+    usage_label.grid(row=7, column=0)
     usage_entry = tk.Entry(root)
-    usage_entry.grid(row=6, column=1)
+    usage_entry.grid(row=7, column=1)
 
     # Category
     category_label = tk.Label(root, text="Category:",font = chinese_font,bg = pink)
-    category_label.grid(row=7, column=0)
+    category_label.grid(row=8, column=0)
     category_entry = tk.Entry(root)
-    category_entry.grid(row=7, column=1)
+    category_entry.grid(row=8, column=1)
     
     # Difficulty
     difficulty_label = tk.Label(root,text = 'Difficulty:',font = chinese_font,bg = pink)
-    difficulty_label.grid(row=8, column = 0)
+    difficulty_label.grid(row=9, column = 0)
     options = ["I", "II", "III"]
     difficulty_entry = tk.StringVar(root)
     difficulty_entry.set(options[0]) # default option 
     difficulty_menu = tk.OptionMenu(root, difficulty_entry, *options)
-    difficulty_menu.grid(row=8, column=1)
+    difficulty_menu.grid(row=9, column=1)
     difficulty_menu.config(font = chinese_font)
 
     # Create the add word button
     add_button = tk.Button(root, text="Add to current dataset", command=add_word,font = chinese_font,bg=blue)
-    add_button.grid(row=9, column=1)
+    add_button.grid(row=10, column=1)
 
     # Create the display words button and listbox
     #display_button = tk.Button(root, text="Display Words", command=display_words,font=chinese_font,bg=blue)
@@ -379,13 +398,13 @@ def main():
     
     # search by difficulty
     search_difficulty_button = tk.Button(root, text = "Search Difficulty",command=search_word_difficulty, font = chinese_font,bg=blue)
-    search_difficulty_button.grid(row=15, column=0,sticky="ew")
+    search_difficulty_button.grid(row=14, column=3,sticky="ew")
     
     
 
     # Create the word display label
     word_display = tk.Label(root, text="", font=chinese_font,bg = pink)
-    word_display.grid(row=17, column=6, columnspan=2)
+    word_display.grid(row=10, column=10, columnspan=2)
 
     # Create the status label - this to make the text fade away slowly
     status_label = tk.Label(root, text="", font=chinese_font,bg = pink)
@@ -393,11 +412,11 @@ def main():
     
     # Test interface:
     start_test_label = tk.Label(root, text = "Begin Testing with this dataset", bg=pink, wraplength=150 )
-    start_test_label.grid(row = 1, column = 9,columnspan=2)
+    start_test_label.grid(row = 1, column=10,columnspan=2)
 
     # Create the start test button
     start_test_button = tk.Button(root, text="Start Test", command=start_test, bg=blue, font=chinese_font, height=3)
-    start_test_button.grid(row=2, column=9,columnspan=3)
+    start_test_button.grid(row=2, column=10,columnspan=3)
     
 
     root.mainloop()
