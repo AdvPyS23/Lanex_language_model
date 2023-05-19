@@ -210,7 +210,7 @@ def start_test():
         question_word, correct_translation = random.sample(list(zip(vocabulary_list["word"], vocabulary_list["translation"])), 1)[0]
 
         # Set the question label text
-        question_label.config(text=f"Question: Type in the translation of the word: {question_word}", bg=blue)
+        question_label.config(text=f"Question: Type in the translation or definition of the word: {question_word}", bg=blue,wraplength=350,justify="center")
         question_label.grid(row=0, column=2)
 
         test_entry.config(state="normal")
@@ -296,7 +296,7 @@ def main():
 
     # Create a label to display the image
     image_label = tk.Label(root, image=image,bg=pink)
-    image_label.grid(row = 0, column=15)
+    image_label.grid(row = 0, column=9)
     
     font_label = tk.Label(root, text = "Click to install fonts:",font = chinese_font, bg = pink)
     font_label.grid(row=0,column=0)
@@ -392,12 +392,12 @@ def main():
     status_label.grid(row=12, column=3, columnspan=2)
     
     # Test interface:
-    start_test_label = tk.Label(root, text = "Begin Testing", bg=pink)
-    start_test_label.grid(row = 8, column = 6,columnspan=2)
+    start_test_label = tk.Label(root, text = "Begin Testing with this dataset", bg=pink, wraplength=150 )
+    start_test_label.grid(row = 1, column = 9,columnspan=2)
 
     # Create the start test button
-    start_test_button = tk.Button(root, text="Start Test", command=start_test, bg=blue, font=chinese_font)
-    start_test_button.grid(row=12, column=6,columnspan=3)
+    start_test_button = tk.Button(root, text="Start Test", command=start_test, bg=blue, font=chinese_font, height=3)
+    start_test_button.grid(row=2, column=9,columnspan=3)
     
 
     root.mainloop()
