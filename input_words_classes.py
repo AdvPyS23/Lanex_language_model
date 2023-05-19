@@ -191,7 +191,7 @@ def start_test():
 
     # Get the test mode
     # Create the test mode label
-    question_label = tk.Label(test_window, text="Question:")
+    question_label = tk.Label(test_window, text="Question: \n")
     question_label.grid(row=0, column=0, padx=10, pady=10)
 
     # Create the test mode entry widget and submit button
@@ -317,7 +317,7 @@ def main():
     install_button = tk.Button(root, text="Install Fonts", command=install_fonts, font = chinese_font,bg = blue)
     install_button.grid(row=0, column=1)
     
-    initial_bd = tk.Label(root, text = "Initialize Lanex built-in dataset:", font = chinese_font, bg=pink)
+    initial_bd = tk.Label(root, text = "Initialize \n built-in dataset:", font = chinese_font, bg=pink)
     initial_bd.grid(row=1,column=0)
     database_button = tk.Button(root, text = "Import database locally", command = initialize_database,bg=blue)
     database_button.grid(row=1,column=1)
@@ -338,7 +338,7 @@ def main():
 
     # User interface: setting up the buttons
     # Word input
-    word_label = tk.Label(root, text="Word:",font=chinese_font,bg = pink)
+    word_label = tk.Label(root, text="Words:",font=chinese_font,bg = pink)
     word_label.grid(row=4, column=0)
     word_entry = tk.Entry(root)
     word_entry.grid(row=4, column=1)
@@ -392,7 +392,7 @@ def main():
     search_label = tk.Label(root, text="Search words:",font = chinese_font,bg = pink)
     search_label.grid(row=14, column=0)
     search_entry = tk.Entry(root)
-    search_entry.grid(row=14, column=1, sticky="ew", columnspan=1)
+    search_entry.grid(row=14, column=1, sticky="ew")
     search_button = tk.Button(root, text="Search Words", command=search_word, font = chinese_font,bg=blue)
     search_button.grid(row=14, column=0, sticky="ew")
     

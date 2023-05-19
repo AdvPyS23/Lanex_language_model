@@ -14,7 +14,11 @@ data = [
     {"word": "复杂", "translation": "complex", "pronunciation": "fù zá", "usage": "这个问题很复杂。", "category": "description", "difficulty": "III"},
     {"word": "麻烦", "translation": "trouble", "pronunciation": "má fan", "usage": "这件事情很麻烦。", "category": "description", "difficulty": "III"},
     {"word": "生物信息", "translation": "bioinformatics", "pronunciation": "Shēngwù xìnxī", "usage": "我在学生物信息学。", "category": "technology", "difficulty": "III"},
-    {"word": "左", "translation": "left", "pronunciation": "Zuǒ", "usage": "请在下个路口左转。", "category": "direction", "difficulty": "I"}
+    {"word": "左", "translation": "left", "pronunciation": "Zuǒ", "usage": "请在下个路口左转。", "category": "direction", "difficulty": "I"},
+    {"word": "上", "translation": "up", "pronunciation": "Shàng", "usage": "请往上爬。", "category": "direction", "difficulty": "I"},
+    {"word": "下", "translation": "down", "pronunciation": "Xià", "usage": "请下楼梯。", "category": "direction", "difficulty": "I"},
+    {"word": "工作", "translation": "work", "pronunciation": "Gōngzuò", "usage": "我每天都去上班工作。", "category": "verb", "difficulty": "III"},
+    {"word": "少", "translation": "few", "pronunciation": "Shǎo", "usage": "这里有很少人。", "category": "adjective", "difficulty": "II"}
     ]
 
 # Convert the data to a DataFrame
