@@ -299,7 +299,7 @@ def main():
     pink = "#557571" # paster pink
     yellow = "#FFFFE0" # pastel yellow
     root = tk.Tk()
-    root.geometry("800x800") 
+    root.geometry("800x900") 
     root.configure(bg=pink)
     root.title("Lanex: Your trusted Language Learning Assistant")
     chinese_font = ("NotoSansCJK", 11)
