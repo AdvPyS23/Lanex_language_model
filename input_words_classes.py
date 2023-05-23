@@ -4,6 +4,7 @@ from tkinter import messagebox
 import pandas as pd
 import os
 import subprocess
+from tkinter import ttk
 
 # Define a class for vocabulary words
 class Word:
@@ -90,7 +91,6 @@ def add_word():
         vocabulary_list.to_csv("vocabulary_cs1.csv", index=False, header=True)
     else:  # Customized set 2:
         vocabulary_list.to_csv("vocabulary_list_chinese_simp.csv", index=False)
-    
 
 # Define a function to display all words in the vocabulary list
 def choose_database():
@@ -143,7 +143,7 @@ def search_word():
                                  f"Pronunciation: {row['pronunciation']}\n"
                                  f"Usage: {row['usage']}\n"
                                  f"Category: {row['category']}\n"
-                                 f"Difficulty: {row['difficulty']}")
+                                 f"Difficulty: {row['difficulty']}",wraplength = 140)
     else:
         word_display.config(text="Word not found.")
 
@@ -159,7 +159,7 @@ def search_word_difficulty():
                                  f"Pronunciation: {row['pronunciation']}\n"
                                  f"Usage: {row['usage']}\n"
                                  f"Category: {row['category']}\n"
-                                 f"Difficulty: {row['difficulty']}",wraplength = 100)
+                                 f"Difficulty: {row['difficulty']}",wraplength = 80)
     else:
         word_display.config(text="Word not found.")
 
@@ -202,8 +202,10 @@ def start_test():
         question_word = question_label.cget("text").split(":")[-1].strip()
         correct_translation = vocabulary_list.loc[vocabulary_list["word"] == question_word, "translation"].iloc[0]
         if user_answer.lower() == correct_translation.lower():
-            messagebox.showinfo("Result", "Correct!")
+            messagebox.showinfo("Feedback", "Congratulations, your answer is correct!")
             score += 1
+        else:
+            messagebox.showerror("Feedback", "Oops, try again!")
 
         question_count += 1
 
@@ -299,7 +301,7 @@ def main():
     pink = "#557571" # paster pink
     yellow = "#FFFFE0" # pastel yellow
     root = tk.Tk()
-    root.geometry("800x900") 
+    root.geometry("700x900") 
     root.configure(bg=pink)
     root.title("Lanex: Your trusted Language Learning Assistant")
     chinese_font = ("NotoSansCJK", 11)
