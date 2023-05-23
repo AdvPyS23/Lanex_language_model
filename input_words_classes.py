@@ -5,6 +5,7 @@ import pandas as pd
 import os
 import subprocess
 from tkinter import ttk
+import matplotlib.pyplot as plt
 
 # Define a class for vocabulary words
 class Word:
@@ -172,6 +173,8 @@ def clear_status_label():
     status_label.config(text="")
 
 asked_questions = set()
+import matplotlib.pyplot as plt
+
 def start_test():
     # Create a new window for the test
     global vocabulary_list
@@ -186,6 +189,7 @@ def start_test():
     # Variables to track score and question count
     score = 0
     question_count = 0
+    score_list = []  # List to store scores for plotting
 
     # Get the test mode
     # Create the test mode label
@@ -195,6 +199,21 @@ def start_test():
     # Create the test mode entry widget and submit button
     test_entry = tk.Entry(test_window)
     test_entry.grid(row=1, column=1, padx=10, pady=10)
+
+    def plot_results():
+        # Calculate the percentage of right and wrong answers
+        correct_percentage = (score / question_count) * 100
+        wrong_percentage = ((question_count - score) / question_count) * 100
+
+        # Plot the percentages
+        labels = ["Correct", "Wrong"]
+        percentages = [correct_percentage, wrong_percentage]
+
+        fig, ax = plt.subplots()
+        ax.pie(percentages, labels=labels, autopct='%1.1f%%', colors=[pink, blue])
+        plt.xlabel("Answer")
+        plt.title("Test Results")
+        plt.show()
 
     def check_answer():
         nonlocal score, question_count
@@ -209,16 +228,16 @@ def start_test():
             messagebox.showerror("Feedback", "Oops, try again!")
 
         question_count += 1
+        score_list.append(score)  # Add the score to the list
 
         # Check if all questions have been answered
         if question_count == 10:
-            # Calculate the score percentage
-            # Add piecharts and other graphs here.
-            score_percentage = (score / 10) * 100
-            messagebox.showinfo("Test Completed", f"correct answer: {score} out of 10. Score: {score_percentage}%")
+            messagebox.showinfo("Test Completed", f"Correct answers: {score} out of 10.")
+            plot_results()  # Call the plot_results() function to display the plot
             close_test_window()
         else:
             ask_question_translation()
+
     def ask_question_translation():
         # Select a random word that has not been asked before
         available_words = set(vocabulary_list["word"]) - asked_questions
@@ -232,7 +251,12 @@ def start_test():
         # Add the asked question to the set of asked questions
         asked_questions.add(question_word)
         # Set the question label text
-        question_label.config(text=f"Question: Type in the translation or definition of the word: {question_word}", bg=blue,wraplength=350,justify="center")
+        question_label.config(
+            text=f"Question: Type in the translation or definition of the word: {question_word}",
+            bg=blue,
+            wraplength=350,
+            justify="center"
+        )
         question_label.grid(row=0, column=2)
 
         test_entry.config(state="normal")
