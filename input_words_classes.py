@@ -171,6 +171,7 @@ def clear_status_label():
     """
     status_label.config(text="")
 
+asked_questions = set()
 def start_test():
     # Create a new window for the test
     global vocabulary_list
@@ -218,11 +219,18 @@ def start_test():
             close_test_window()
         else:
             ask_question_translation()
-
     def ask_question_translation():
+        # Select a random word that has not been asked before
+        available_words = set(vocabulary_list["word"]) - asked_questions
+        if not available_words:
+            # All questions have been asked, handle this case as desired (e.g., show a message)
+            return
         # Select a random word and its translation from the vocabulary list
-        question_word, correct_translation = random.sample(list(zip(vocabulary_list["word"], vocabulary_list["translation"])), 1)[0]
+        question_word = random.choice(list(available_words))
+        correct_translation = vocabulary_list.loc[vocabulary_list["word"] == question_word, "translation"].iloc[0]
 
+        # Add the asked question to the set of asked questions
+        asked_questions.add(question_word)
         # Set the question label text
         question_label.config(text=f"Question: Type in the translation or definition of the word: {question_word}", bg=blue,wraplength=350,justify="center")
         question_label.grid(row=0, column=2)
