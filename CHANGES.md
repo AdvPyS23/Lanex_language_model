@@ -16,4 +16,4 @@
 * [x] Major fix: changed everything into dataframe. Built-in stored as csv files, seperated by comma.
 * [x] The python vs python3 command line options. Maybe we could integrate the generators into the main.py
 * [ ] Add Try and Except for : when user input is too long
-* [ ] Unittest: for emojis or other special characters[
+* [ ] Unittest: for emojis or other special characters

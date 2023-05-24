@@ -22,10 +22,12 @@ vocabulary_list = pd.DataFrame(columns=[
     "word", "translation", "pronunciation", "usage", "category", "difficulty"])
 
 def is_font_installed(font_name):
-    # Run fc-list command and check if the font name is present in the output
-    command = f"fc-list : family | grep -i {font_name}"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    
+    try:
+        # Run fc-list command and check if the font name is present in the output
+        command = f"fc-list : family | grep -i {font_name}"
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    except:
+        print("Font cannot be installed: check if you are in root.")
     return result.returncode == 0
 
 def install_fonts():
@@ -129,9 +131,11 @@ def choose_database():
 
 def display_words():
     word_list.delete(0, tk.END)
-    for index, row in vocabulary_list.iterrows():
-        word_list.insert(tk.END, row["word"])
-
+    try:
+        for index, row in vocabulary_list.iterrows():
+            word_list.insert(tk.END, row["word"])
+    except: 
+        print("Error: dataset is empty! Click the 'Activate dataset' button.")
 
 # Define a function to search for a specific word in the vocabulary list
 def search_word():
