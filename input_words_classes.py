@@ -26,9 +26,9 @@ def is_font_installed(font_name):
         # Run fc-list command and check if the font name is present in the output
         command = f"fc-list : family | grep -i {font_name}"
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        return result.returncode == 0
     except:
         print("Font cannot be installed: check if you are in root.")
-    return result.returncode == 0
 
 def install_fonts():
     font_name = "NotoSansCJK"
